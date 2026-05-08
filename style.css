@@ -1,37 +1,97 @@
 body {
   margin: 0;
-  background: black;
   overflow: hidden;
-
+  background: radial-gradient(circle at center, #120018, #000);
   font-family: Arial, sans-serif;
   color: white;
 }
 
+/* canvas сердце */
 canvas {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 0;
 }
 
-.content {
+/* UI поверх */
+.ui {
   position: absolute;
-
   width: 100%;
   text-align: center;
-
-  top: 70%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
+  top: 65%;
   z-index: 10;
 }
 
 h1 {
-  color: pink;
-  font-size: 52px;
+  color: #ff6fae;
+  text-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+  margin-bottom: 20px;
 }
 
-p {
-  font-size: 22px;
+/* КНОПКА */
+.love-btn {
+  padding: 14px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+
+  background: linear-gradient(45deg, #ff4d8d, #ff85c1);
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  animation: pulse 2s infinite;
+}
+
+.love-btn:hover {
+  transform: scale(1.1);
+}
+
+/* пульс кнопки */
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px rgba(255,105,180,0.4); }
+  50% { box-shadow: 0 0 25px rgba(255,105,180,0.8); }
+  100% { box-shadow: 0 0 10px rgba(255,105,180,0.4); }
+}
+
+/* МОДАЛКА */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+}
+
+/* письмо */
+.letter {
+  background: #1a001a;
+  padding: 30px;
+  border-radius: 20px;
+
+  width: 320px;
+  text-align: center;
+
+  border: 1px solid rgba(255,105,180,0.3);
+  box-shadow: 0 0 40px rgba(255,105,180,0.3);
+}
+
+.close-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: #ff4d8d;
+  color: white;
+
+  cursor: pointer;
 }

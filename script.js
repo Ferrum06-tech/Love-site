@@ -4,8 +4,14 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
 const particles = [];
 
+// сердце
 for (let t = 0; t < Math.PI * 2; t += 0.04) {
 
   const x = 16 * Math.pow(Math.sin(t), 3);
@@ -16,27 +22,22 @@ for (let t = 0; t < Math.PI * 2; t += 0.04) {
     - 2 * Math.cos(3 * t)
     - Math.cos(4 * t);
 
-  particles.push({
-    x: x * 20,
-    y: -y * 20
-  });
+  particles.push({ x: x * 20, y: -y * 20 });
 }
 
 function animate() {
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = "pink";
+  particles.forEach((p, i) => {
 
-  ctx.font = "16px Arial";
+    const pulse = Math.sin(Date.now() * 0.003 + i) * 5;
 
-  particles.forEach((p, index) => {
+    // 💖 СЕРДЦЕ (розовое)
+    ctx.fillStyle = "#ff4d8d";
 
-    const pulse =
-      Math.sin(Date.now() * 0.003 + index) * 5;
-
+    ctx.font = "16px Arial";
     ctx.fillText(
-      "I love you",
+      "❤",
       canvas.width / 2 + p.x + pulse,
       canvas.height / 2 + p.y + pulse
     );
@@ -46,3 +47,17 @@ function animate() {
 }
 
 animate();
+
+
+// 💌 ОТКРЫТИЕ ПИСЬМА
+const modal = document.getElementById("letterModal");
+const openBtn = document.getElementById("openLetter");
+const closeBtn = document.getElementById("closeLetter");
+
+openBtn.onclick = () => {
+  modal.style.display = "flex";
+};
+
+closeBtn.onclick = () => {
+  modal.style.display = "none";
+};

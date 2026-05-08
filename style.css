@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  position: absolute;
+
+  width: 100%;
+  text-align: center;
+
+  top: 70%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 10;
+}
+
+h1 {
+  color: pink;
+  font-size: 52px;
+}
+
+p {
+  font-size: 22px;
+}

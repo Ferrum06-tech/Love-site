@@ -4,8 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Для тебя ❤️</title>
+  <title>For You</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -14,23 +13,38 @@
 
   <canvas id="heart"></canvas>
 
-  <div class="content">
+  <div class="ui">
 
-    <div class="card">
+    <h1>Я люблю тебя, Яна </h1>
 
-      <h1>Я люблю тебя, Яна ❤️</h1>
+    <button id="openLetter" class="love-btn">
+      Я очень люблю тебя, Яна 
+    </button>
 
-      <p>Спасибо тебе за всё.</p>
-      <p>Ты — лучшее, что случалось со мной.</p>
+  </div>
 
-      <div class="glow"></div>
+  <!-- ОТКРЫТКА -->
+  <div id="letterModal" class="modal">
+    <div class="letter">
+
+      <h2> "Это письмо для тебя</h2>
+
+      <p>
+        Яна, ты самое важное, что есть в моей жизни.
+        Каждый день с тобой - это счастье.
+                 you are my future 
+      </p>
+
+      <p>
+        Спасибо, что ты есть
+      </p>
+
+      <button id="closeLetter" class="close-btn">Закрыть</button>
 
     </div>
-
   </div>
 
   <script src="script.js"></script>
 
 </body>
-
 </html>

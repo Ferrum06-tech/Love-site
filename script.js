@@ -33,11 +33,11 @@ function animate() {
     const pulse = Math.sin(Date.now() * 0.003 + i) * 5;
 
     // 💖 СЕРДЦЕ (розовое)
-    ctx.fillStyle = "#ff4d8d";
+    ctx.fillStyle = "#550422a0";
 
     ctx.font = "16px Arial";
     ctx.fillText(
-      "❤",
+      "Love You",
       canvas.width / 2 + p.x + pulse,
       canvas.height / 2 + p.y + pulse
     );

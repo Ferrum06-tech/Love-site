@@ -1,63 +1,73 @@
-const canvas = document.getElementById("heart");
-const ctx = canvas.getContext("2d");
+const canvas = document.getElementById('heartCanvas');
+const ctx = canvas.getContext('2d');
+let time = 0;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function drawHeart() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    time += 0.008;
 
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2 - 20;
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+
+    ctx.font = "bold 15px 'Playfair Display', serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const points = [];
+    const a = 18;
+    const b = 16;
+
+    for (let i = 0; i < 360; i += 1.8) {
+        const angle = i * Math.PI / 180;
+        const x = a * Math.pow(Math.sin(angle), 3);
+        const y = b * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+        points.push({ x: x * 8.5, y: -y * 8.5 });
+    }
+
+    points.forEach((p, index) => {
+        const alpha = 0.85 + Math.sin(time * 3 + index) * 0.15;
+        const hue = (index * 2 + time * 30) % 360;
+
+        // Чередование цветов: розовый и золотой
+        ctx.fillStyle = (index % 2 === 0) 
+            ? `hsla(330, 95%, 68%, ${alpha})`   // розовый
+            : `hsla(45, 100%, 78%, ${alpha})`;  // золотой
+
+        const rot = Math.sin(time * 2 + index * 0.1) * 6;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(rot * Math.PI / 180);
+        ctx.fillText(index % 3 === 0 ? "Люблю тебя" : "I love you", 0, 0);
+        ctx.restore();
+    });
+
+    ctx.restore();
+    requestAnimationFrame(drawHeart);
+}
+
+// Запуск анимации сердца
+drawHeart();
+
+// Кнопка открытия открытки
+const button = document.getElementById('loveButton');
+const envelope = document.getElementById('envelope');
+const closeBtn = document.getElementById('closeBtn');
+
+button.addEventListener('click', () => {
+    envelope.classList.add('show');
 });
 
-const particles = [];
+closeBtn.addEventListener('click', () => {
+    envelope.classList.remove('show');
+});
 
-// сердце
-for (let t = 0; t < Math.PI * 2; t += 0.04) {
-
-  const x = 16 * Math.pow(Math.sin(t), 3);
-
-  const y =
-    13 * Math.cos(t)
-    - 5 * Math.cos(2 * t)
-    - 2 * Math.cos(3 * t)
-    - Math.cos(4 * t);
-
-  particles.push({ x: x * 20, y: -y * 20 });
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach((p, i) => {
-
-    const pulse = Math.sin(Date.now() * 0.003 + i) * 5;
-
-    // 💖 СЕРДЦЕ (розовое)
-    ctx.fillStyle = "#550422a0";
-
-    ctx.font = "16px Arial";
-    ctx.fillText(
-      "Love You",
-      canvas.width / 2 + p.x + pulse,
-      canvas.height / 2 + p.y + pulse
-    );
-  });
-
-  requestAnimationFrame(animate);
-}
-
-animate();
-
-
-// 💌 ОТКРЫТИЕ ПИСЬМА
-const modal = document.getElementById("letterModal");
-const openBtn = document.getElementById("openLetter");
-const closeBtn = document.getElementById("closeLetter");
-
-openBtn.onclick = () => {
-  modal.style.display = "flex";
-};
-
-closeBtn.onclick = () => {
-  modal.style.display = "none";
-};
+// Закрытие по клику вне открытки
+envelope.addEventListener('click', (e) => {
+    if (e.target === envelope) {
+        envelope.classList.remove('show');
+    }
+});

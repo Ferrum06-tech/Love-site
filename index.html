@@ -1,50 +1,42 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For You </title>
-
-  <link rel="stylesheet" href="style.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Я люблю тебя, Яна ❤️</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="background"></div>
 
-  <canvas id="heart"></canvas>
+    <h2 class="title">Для моей Яны</h2>
+    
+    <div class="heart-container">
+        <canvas id="heartCanvas" width="420" height="420"></canvas>
+    </div>
 
-  <div class="ui">
-
-    <h1>Я люблю тебя, Яна </h1>
-
-    <button id="openLetter" class="love-btn">
-      Я люблю тебя, Яна 
+    <button class="love-button" id="loveButton">
+        Я люблю тебя, Яна
     </button>
 
-  </div>
-
-  <!-- ОТКРЫТКА -->
-  <div id="letterModal" class="modal">
-    <div class="letter">
-
-      <h2> For You </h2>
-
-      <p>
-        Яна, ты самое важное, что есть в моей жизни.
-            Каждый день с тобой - это золото.
-                  you are my future
-      </p>
-
-      <p>
-        Спасибо, что ты есть 
-      </p>
-
-      <button id="closeLetter" class="close-btn">Закрыть</button>
-
+    <!-- Открытка -->
+    <div class="envelope" id="envelope">
+        <button class="close-btn" id="closeBtn">✕</button>
+        <div class="card">
+            <h1>My darling</h1>
+            <p>Каждый день с тобой, это чудо.<br>
+               Ты моё самое красивое сердце в мире,<br>
+               моя самая самая нежная любовь.<br><br>
+               Спасибо, что ты есть.<br>
+               Я люблю тебя сильнее, чем вчера,<br>
+               и меньше, чем завтра.</p>
+            <div class="heart-small">❤️</div>
+            <p class="signature">Твой навсегда</p>
+        </div>
     </div>
-  </div>
 
-  <script src="script."></script>
+    <footer>Сделано с любовью For You</footer>
 
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,73 +1,105 @@
-const canvas = document.getElementById('heartCanvas');
-const ctx = canvas.getContext('2d');
-let time = 0;
+const canvas = document.getElementById("heart");
+const ctx = canvas.getContext("2d");
 
-function drawHeart() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    time += 0.008;
-
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2 - 20;
-
-    ctx.save();
-    ctx.translate(centerX, centerY);
-
-    ctx.font = "bold 15px 'Playfair Display', serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    const points = [];
-    const a = 18;
-    const b = 16;
-
-    for (let i = 0; i < 360; i += 1.8) {
-        const angle = i * Math.PI / 180;
-        const x = a * Math.pow(Math.sin(angle), 3);
-        const y = b * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
-        points.push({ x: x * 8.5, y: -y * 8.5 });
-    }
-
-    points.forEach((p, index) => {
-        const alpha = 0.85 + Math.sin(time * 3 + index) * 0.15;
-        const hue = (index * 2 + time * 30) % 360;
-
-        // Чередование цветов: розовый и золотой
-        ctx.fillStyle = (index % 2 === 0) 
-            ? `hsla(330, 95%, 68%, ${alpha})`   // розовый
-            : `hsla(45, 100%, 78%, ${alpha})`;  // золотой
-
-        const rot = Math.sin(time * 2 + index * 0.1) * 6;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(rot * Math.PI / 180);
-        ctx.fillText(index % 3 === 0 ? "Люблю тебя" : "I love you", 0, 0);
-        ctx.restore();
-    });
-
-    ctx.restore();
-    requestAnimationFrame(drawHeart);
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
-// Запуск анимации сердца
-drawHeart();
+resizeCanvas();
 
-// Кнопка открытия открытки
-const button = document.getElementById('loveButton');
-const envelope = document.getElementById('envelope');
-const closeBtn = document.getElementById('closeBtn');
+window.addEventListener("resize", resizeCanvas);
 
-button.addEventListener('click', () => {
-    envelope.classList.add('show');
-});
+const particles = [];
 
-closeBtn.addEventListener('click', () => {
-    envelope.classList.remove('show');
-});
+function heartShape(t) {
 
-// Закрытие по клику вне открытки
-envelope.addEventListener('click', (e) => {
-    if (e.target === envelope) {
-        envelope.classList.remove('show');
+    const x =
+        16 * Math.pow(Math.sin(t), 3);
+
+    const y =
+        13 * Math.cos(t)
+        - 5 * Math.cos(2 * t)
+        - 2 * Math.cos(3 * t)
+        - Math.cos(4 * t);
+
+    return {
+        x: x,
+        y: -y
+    };
+}
+
+for (let i = 0; i < 700; i++) {
+
+    const t =
+        Math.random() * Math.PI * 2;
+
+    const pos =
+        heartShape(t);
+
+    particles.push({
+        x: pos.x,
+        y: pos.y,
+        size: 14 + Math.random() * 10,
+        offset: Math.random() * 1000
+    });
+}
+
+function animate(time) {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    for (let i = 0; i < particles.length; i++) {
+
+        const p = particles[i];
+
+        const scale = 20;
+
+        const move =
+            Math.sin(time * 0.002 + p.offset) * 5;
+
+        const drawX =
+            canvas.width / 2 + p.x * scale;
+
+        const drawY =
+            canvas.height / 2 + p.y * scale + move;
+
+        ctx.font =
+            p.size + "px Arial";
+
+        ctx.fillStyle =
+            "rgba(255,100,150,0.9)";
+
+        ctx.fillText(
+            "I Love You",
+            drawX,
+            drawY
+        );
     }
+
+    requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+const openBtn =
+    document.getElementById("openBtn");
+
+const closeBtn =
+    document.getElementById("closeBtn");
+
+const letter =
+    document.getElementById("letter");
+
+openBtn.addEventListener("click", function () {
+    letter.classList.add("show");
+});
+
+closeBtn.addEventListener("click", function () {
+    letter.classList.remove("show");
 });
